@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import LabeledInput from "../Elements/LabeledInput";
-import CheckBox from "../Elements/CheckBox";
 import Button from "../Elements/Button";
+import { Link } from "react-router-dom";
 
-function FormSignIn() {
+function FormSignUp() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = () => {
+    console.log("submit signup diklik");
+  };
+
   return (
     <>
-      {/* form start */}
-      <div className="mt-8 w-full max-w-sm mx-auto">
-        <form action="">
+      <div className="mt-10 w-full max-w-sm mx-auto">
+        <h2 className="text-center text-xl font-semibold text-gray-900 mb-8">
+          Create an account
+        </h2>
+
+        <form className="space-y-5">
           <div className="mb-6">
             <LabeledInput
               label="Name"
@@ -18,103 +27,148 @@ function FormSignIn() {
               name="name"
             />
           </div>
+
           <div className="mb-6">
             <LabeledInput
-              Label="Email Address"
+              label="Email Address"
               id="email"
               type="email"
               placeholder="hello@example.com"
               name="email"
             />
           </div>
-          <div className="mb-6">
-            <LabeledInput
-              label="Password"
-              id="password"
-              type="password"
-              placeholder="********"
-              name="password"
-            />
+
+          <div className="mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Password
+            </label>
+
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••••"
+                className="block w-full rounded-md border border-gray-300 px-4 py-3 pr-10 text-sm placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  {showPassword ? (
+                    // eye-off
+                    <>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.875 18.825A10.05 10.05 0 0112 19.5C4.5 19.5 1 12 1 12a17.94 17.94 0 014.508-5.873M9.878 4.44A10.05 10.05 0 0112 4.5c7.5 0 11 7.5 11 7.5a17.94 17.94 0 01-4.508 5.873M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 3l18 18"
+                      />
+                    </>
+                  ) : (
+                    // eye
+                    <>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12 18.75 19.5 12 19.5 1.5 12 1.5 12z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 15a3 3 0 100-6 3 3 0 000 6z"
+                      />
+                    </>
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <div className="mb-3">
-            <checkBox
-              label="I agree to the term of service"
-              id="terms"
-              type="submit"
-              name="terms"
-            />
-          </div>
-          <Button>Sign up</Button>
+          {/* Terms */}
+          <p className="text-xs text-gray-500 mb-2">
+            By continuing, you agree to our{" "}
+            <a href="#" className="text-primary font-medium">
+              terms of service.
+            </a>
+          </p>
+
+          {/* Button – BUKAN submit HTML */}
+          <Button type="button" className="w-full" onClick={handleSubmit}>
+            Sign up
+          </Button>
         </form>
       </div>
-      {/* form end */}
-      {/* teks start */}
-      <div className="my-9 px-7 flex flex-col justify-center items-center text-xs text-gray-03">
-        <div className="border border-gray-05 w-full"></div>
-        <div class="px-2 bg-special-mainBg absolute"> or sign in with</div>
+
+      {/* DIVIDER */}
+      <div className="my-9 px-7 flex flex-col justify-center items-center text-xs text-gray-03 relative">
+        <div className="border border-gray-05 w-full" />
+        <div className="px-2 bg-special-mainBg absolute">or sign up with</div>
       </div>
-      {/* teks end */}
-      {/* sign in with google start */}
-      <div className="mb-8">
-        <Button type="button" variant="secondary">
+
+      {/* GOOGLE BUTTON */}
+      <div className="mb-8 px-7 w-full max-w-sm mx-auto">
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-full flex items-center justify-center"
+        >
           <span className="flex items-center justify-center">
             <svg
-              class="h-6 w-6 mr-2"
+              className="h-5 w-5 mr-2"
               xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              width="800px"
-              height="800px"
               viewBox="-0.5 0 48 48"
-              version="1.1"
             >
-              <title>Google-color</title> <desc>Created with Sketch.</desc>
-              <defs> </defs>
-              <g
-                id="Icons"
-                stroke="none"
-                stroke-width="1"
-                fill="none"
-                fill-rule="evenodd"
-              >
-                <g id="Color-" transform="translate(-401.000000, -860.000000)">
-                  <g id="Google" transform="translate(401.000000, 860.000000)">
-                    <path
-                      d="M9.82727273,24 C9.82727273,22.4757333 10.0804318,21.0144 10.5322727,19.6437333 L2.62345455,13.6042667 C1.08206818,16.7338667 0.213636364,20.2602667 0.213636364,24 C0.213636364,27.7365333 1.081,31.2608 2.62025,34.3882667 L10.5247955,28.3370667 C10.0772273,26.9728 9.82727273,25.5168 9.82727273,24"
-                      id="Fill-1"
-                      fill="#FBBC05"
-                    ></path>
-                    <path
-                      d="M23.7136364,10.1333333 C27.025,10.1333333 30.0159091,11.3066667 32.3659091,13.2266667 L39.2022727,6.4 C35.0363636,2.77333333 29.6954545,0.533333333 23.7136364,0.533333333 C14.4268636,0.533333333 6.44540909,5.84426667 2.62345455,13.6042667 L10.5322727,19.6437333 C12.3545909,14.112 17.5491591,10.1333333 23.7136364,10.1333333"
-                      id="Fill-2"
-                      fill="#EB4335"
-                    ></path>
-                    <path
-                      d="M23.7136364,37.8666667 C17.5491591,37.8666667 12.3545909,33.888 10.5322727,28.3562667 L2.62345455,34.3946667 C6.44540909,42.1557333 14.4268636,47.4666667 23.7136364,47.4666667 C29.4455,47.4666667 34.9177955,45.4314667 39.0249545,41.6181333 L31.5177727,35.8144 C29.3995682,37.1488 26.7323182,37.8666667 23.7136364,37.8666667"
-                      id="Fill-3"
-                      fill="#34A853"
-                    ></path>
-                    <path
-                      d="M46.1454545,24 C46.1454545,22.6133333 45.9318182,21.12 45.6113636,19.7333333 L23.7136364,19.7333333 L23.7136364,28.8 L36.3181818,28.8 C35.6879545,31.8912 33.9724545,34.2677333 31.5177727,35.8144 L39.0249545,41.6181333 C43.3393409,37.6138667 46.1454545,31.6490667 46.1454545,24"
-                      id="Fill-4"
-                      fill="#4285F4"
-                    ></path>
-                  </g>
-                </g>
+              <g fill="none" fillRule="evenodd">
+                <path
+                  d="M9.827 24c0-1.524.253-2.986.705-4.356L2.623 13.604A23.71 23.71 0 000.214 24c0 3.737.868 7.262 2.407 10.388l7.904-6.051A13.94 13.94 0 019.827 24"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M23.714 10.133c3.311 0 6.302 1.173 8.652 3.093L39.202 6.4C35.036 2.773 29.695.533 23.714.533 14.427.533 6.445 5.844 2.623 13.604l7.909 6.04c1.822-5.532 7.016-9.51 13.182-9.51"
+                  fill="#EB4335"
+                />
+                <path
+                  d="M23.714 37.867c-6.165 0-11.36-3.979-13.182-9.51l-7.909 6.039C6.445 42.156 14.427 47.467 23.714 47.467c5.732 0 11.204-2.035 15.312-5.849l-7.507-5.804c-2.118 1.334-4.786 2.053-7.805 2.053"
+                  fill="#34A853"
+                />
+                <path
+                  d="M46.145 24c0-1.387-.213-2.88-.534-4.267H23.714V28.8h12.604c-.63 3.09-2.346 5.467-4.8 7.013l7.507 5.804C43.339 37.614 46.145 31.649 46.145 24"
+                  fill="#4285F4"
+                />
               </g>
             </svg>
             Continue with Google
           </span>
         </Button>
       </div>
-      {/* sign in with google end */}
-      {/* link start */}
-      <div className="flex justify-center">
-        <a className="text-primary text-sm font-bold">
-          Already have an account? Sign in here
-        </a>
+
+      {/* Link */}
+      <div className="flex justify-center mb-4">
+        <p className="text-xs text-gray-500">
+          Already have an account?{" "}
+          <Link to="/login" className="text-primary font-bold">
+            Sign In Here
+          </Link>
+        </p>
       </div>
-      {/* link end */}
     </>
   );
 }
