@@ -1,9 +1,10 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignIn from "./pages/signIn";
 import SignUp from "./pages/signUp";
 import ErrorPage from "./pages/error";
 import DashboardPage from "./pages/dashboard";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import BalancePage from "./pages/balance";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <SignUp />,
+  },
+  {
+    path: "/balance",
+    element: <BalancePage />,
   },
 ]);
 
