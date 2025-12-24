@@ -1,11 +1,13 @@
 import React from "react";
 import MainLayout from "../components/Layouts/MainLayout";
+
 import CardBalance from "../components/Fragments/CardBalance";
 import CardGoals from "../components/Fragments/CardGoals";
 import CardUpcomingBill from "../components/Fragments/CardUpcomingBill";
 import CardRecentTransaction from "../components/Fragments/CardRecentTransaction";
 import CardStatistic from "../components/Fragments/CardStatistic";
 import CardExpenseBreakdown from "../components/Fragments/CardExpenseBreakdown";
+
 import {
   transactions,
   bills,
@@ -15,35 +17,46 @@ import {
   expensesStatistics,
 } from "../data";
 
-function dashboard() {
-  console.log(transactions);
-
+function Dashboard() {
   return (
-    <>
-      <MainLayout>
-        <div className="grid sm:grid-cols-12 sm:grid-rows-3 gap-6 h-full">
-          <div className="sm:col-span-4">
-            <CardBalance data={balances} />
-          </div>
-          <div className="sm:col-span-4">
-            <CardGoals data={goals} />
-          </div>
-          <div className="sm:col-span-4">
-            <CardUpcomingBill data={bills} />
-          </div>
-          <div className="sm:col-span-4 sm:row-span-2">
-            <CardRecentTransaction data={transactions} />
-          </div>
-          <div className="sm:col-span-8">
-            <CardStatistic data={expensesStatistics} />
-          </div>
-          <div className="sm:col-span-8">
-            <CardExpenseBreakdown data={expensesBreakdowns} />
-          </div>
+    <MainLayout>
+      <div
+        className="
+          grid
+          grid-cols-1
+          sm:grid-cols-2
+          lg:grid-cols-12
+          gap-6
+        "
+      >
+        {/* ===== ROW 1 ===== */}
+        <div className="lg:col-span-4">
+          <CardBalance data={balances} />
         </div>
-      </MainLayout>
-    </>
+
+        <div className="lg:col-span-4">
+          <CardGoals data={goals} />
+        </div>
+
+        <div className="lg:col-span-4">
+          <CardUpcomingBill data={bills} />
+        </div>
+
+        {/* ===== ROW 2 & 3 ===== */}
+        <div className="lg:col-span-5 lg:row-span-2">
+          <CardRecentTransaction data={transactions} />
+        </div>
+
+        <div className="lg:col-span-7">
+          <CardStatistic data={expensesStatistics} />
+        </div>
+
+        <div className="lg:col-span-7">
+          <CardExpenseBreakdown data={expensesBreakdowns} />
+        </div>
+      </div>
+    </MainLayout>
   );
 }
 
-export default dashboard;
+export default Dashboard;
