@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MainLayout from "../components/Layouts/MainLayout";
-
 import CardBalance from "../components/Fragments/CardBalance";
-import CardGoals from "../components/Fragments/CardGoals";
+import CardGoal from "../components/Fragments/CardGoals";
 import CardUpcomingBill from "../components/Fragments/CardUpcomingBill";
 import CardRecentTransaction from "../components/Fragments/CardRecentTransaction";
 import CardStatistic from "../components/Fragments/CardStatistic";
 import CardExpenseBreakdown from "../components/Fragments/CardExpenseBreakdown";
-
 import {
   transactions,
   bills,
@@ -16,47 +14,58 @@ import {
   goals,
   expensesStatistics,
 } from "../data";
+import { goalService } from "../services/dataService";
+import { AuthContext } from "../context/authContext";
 
-function Dashboard() {
+function dashboard() {
+  const [goals, setGoals] = useState({});
+  const { logout } = useContext(AuthContext);
+
+  const fetchGoals = async () => {
+    try {
+      const data = await goalService();
+      setGoals(data);
+    } catch (err) {
+      console.error("Gagal mengambil data goals:", err);
+      if (err.status === 401) {
+        logout();
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchGoals();
+  }, []);
+
+  console.log(goals);
+
   return (
-    <MainLayout>
-      <div
-        className="
-          grid
-          grid-cols-1
-          sm:grid-cols-2
-          lg:grid-cols-12
-          gap-6
-        "
-      >
-        {/* ===== ROW 1 ===== */}
-        <div className="lg:col-span-4">
-          <CardBalance data={balances} />
-        </div>
+    <>
+      <MainLayout>
+        <div className="grid sm:grid-cols-12 gap-6">
+          <div className="sm:col-span-4">
+            <CardBalance data={balances} />
+          </div>
 
-        <div className="lg:col-span-4">
-          <CardGoals data={goals} />
+          <div className="sm:col-span-4">
+            <CardGoal data={goals} />
+          </div>
+          <div className="sm:col-span-4">
+            <CardUpcomingBill data={bills} />
+          </div>
+          <div className="sm:col-span-4 sm:row-span-2">
+            <CardRecentTransaction data={transactions} />
+          </div>
+          <div className="sm:col-span-8">
+            <CardStatistic data={expensesStatistics} />
+          </div>
+          <div className="sm:col-span-8">
+            <CardExpenseBreakdown data={expensesBreakdowns} />
+          </div>
         </div>
-
-        <div className="lg:col-span-4">
-          <CardUpcomingBill data={bills} />
-        </div>
-
-        {/* ===== ROW 2 & 3 ===== */}
-        <div className="lg:col-span-5 lg:row-span-2">
-          <CardRecentTransaction data={transactions} />
-        </div>
-
-        <div className="lg:col-span-7">
-          <CardStatistic data={expensesStatistics} />
-        </div>
-
-        <div className="lg:col-span-7">
-          <CardExpenseBreakdown data={expensesBreakdowns} />
-        </div>
-      </div>
-    </MainLayout>
+      </MainLayout>
+    </>
   );
 }
 
-export default Dashboard;
+export default dashboard;

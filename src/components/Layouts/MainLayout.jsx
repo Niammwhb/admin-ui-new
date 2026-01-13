@@ -5,6 +5,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Icon from "../Elements/Icon";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/themeContext";
+import { AuthContext } from "../../context/authContext";
+import { logoutService } from "../../services/authService";
 
 function MainLayout(props) {
   const { children } = props;
@@ -33,6 +35,19 @@ function MainLayout(props) {
     { id: 6, name: "Goals", icon: <Icon.Goal />, link: "/goal" },
     { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
   ];
+  const { user, logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    try {
+      await logoutService();
+      logout();
+    } catch (err) {
+      console.error(err);
+      if (err.status === 401) {
+        logout();
+      }
+    }
+  };
 
   return (
     <>
@@ -42,6 +57,24 @@ function MainLayout(props) {
             <div className="mb-10">
               <Logo variant="secondary" />
             </div>
+            {/* <div className="flex hover:bg-special-bg3 hover:text-white px-4 py-3 rounded-md">
+              <div className="mx-auto sm:mx-0">
+                <Icon.Overview />
+              </div>
+              <div className="ms-3 hidden sm:block">Overview</div>
+            </div>
+            <div className="flex hover:bg-special-bg3 hover:text-white px-4 py-3 rounded-md">
+              <div className="mx-auto sm:mx-0">
+                <Icon.Balance />
+              </div>
+              <div className="ms-3 hidden sm:block">Balances</div>
+            </div>
+            <div className="flex hover:bg-special-bg3 hover:text-white px-4 py-3 rounded-md">
+              <div className="mx-auto sm:mx-0">
+                <Icon.Transaction />
+              </div>
+              <div className="ms-3 hidden sm:block">Transactions</div>
+            </div> */}
             <nav>
               {menu.map((item) => (
                 <NavLink
@@ -74,30 +107,32 @@ function MainLayout(props) {
             </div>
           </div>
           <div>
-            <NavLink to="/login">
+            <div onClick={handleLogout} className="cursor-pointer">
               <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
                 <div className="mx-auto sm:mx-0 text-primary">
                   <Icon.Logout />
                 </div>
                 <div className="ms-3 hidden sm:block">Logout</div>
               </div>
-            </NavLink>
+            </div>
             <div className="border my-10 border-b-special-bg"></div>
             <div className="flex justify-between items-center">
               <div>Avatar</div>
               <div className="hidden sm:block">
-                Username
+                {user.name}
                 <br />
                 View Profile
               </div>
-              <div className="hidden sm:block">icon</div>
+              <div className="hidden sm:block">
+                <Icon.Detail size={15} />
+              </div>
             </div>
           </div>
         </aside>
         <div className="bg-special-mainBg flex-1 flex flex-col">
           <header className="border border-b border-gray-05 px-6 py-7 flex justify-between items-center">
             <div className="flex items-center">
-              <div className="font-bold text-2xl me-6">Username</div>
+              <div className="font-bold text-2xl me-6">{user.name}</div>
               <div className="text-gray-03 flex">
                 <Icon.ChevronRight size={20} />
                 <span>May 19, 2023</span>

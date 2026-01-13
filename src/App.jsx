@@ -1,31 +1,69 @@
 import "./App.css";
-import SignIn from "./pages/signIn";
-import SignUp from "./pages/signUp";
-import ErrorPage from "./pages/error";
-import DashboardPage from "./pages/dashboard";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import BalancePage from "./pages/balance";
+import SignInPage from "./Pages/signIn";
+import SignUpPage from "./Pages/signup";
+import ErrorPage from "./Pages/error";
+import DashboardPage from "./Pages/dashboard";
+import BalancePage from "./Pages/balance";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <DashboardPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <SignIn />,
-  },
-  {
-    path: "/register",
-    element: <SignUp />,
-  },
-  {
-    path: "/balance",
-    element: <BalancePage />,
-  },
-]);
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/authContext";
 
-export default function App() {
-  return <RouterProvider router={router} />;
+function App() {
+  const { user } = useContext(AuthContext);
+
+  const RequireAuth = ({ children }) => {
+    return user ? children : <Navigate to="/login" />;
+  };
+
+  const NotRequireAuth = ({ children }) => {
+    return user ? <Navigate to="/" /> : children;
+  };
+
+  const myRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <RequireAuth>
+          <DashboardPage />
+        </RequireAuth>
+      ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/login",
+      element: (
+        <NotRequireAuth>
+          <SignInPage />
+        </NotRequireAuth>
+      ),
+    },
+    {
+      path: "/register",
+      element: (
+        <NotRequireAuth>
+          <SignUpPage />
+        </NotRequireAuth>
+      ),
+    },
+    {
+      path: "/balance",
+      element: (
+        <RequireAuth>
+          <BalancePage />
+        </RequireAuth>
+      ),
+    },
+  ]);
+  return (
+    <>
+      <RouterProvider router={myRouter} />
+    </>
+  );
 }
+
+export default App;
