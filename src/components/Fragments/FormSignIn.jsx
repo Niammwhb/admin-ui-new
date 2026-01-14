@@ -5,14 +5,6 @@ import Button from "../Elements/Button";
 import { Link } from "react-router-dom";
 
 function FormSignIn({ onSubmit }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(email, password);
-  };
-
   return (
     <>
       <div className="mt-16">
