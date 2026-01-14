@@ -1,9 +1,9 @@
 import "./App.css";
-import SignInPage from "./Pages/signIn";
-import SignUpPage from "./Pages/signup";
-import ErrorPage from "./Pages/error";
-import DashboardPage from "./Pages/dashboard";
-import BalancePage from "./Pages/balance";
+import SignInPage from "./pages/signIn";
+import SignUpPage from "./pages/signup";
+import ErrorPage from "./pages/error";
+import DashboardPage from "./pages/dashboard";
+import BalancePage from "./pages/balance";
 
 import {
   createBrowserRouter,

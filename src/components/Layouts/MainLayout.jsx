@@ -121,7 +121,7 @@ function MainLayout(props) {
               <div className="hidden sm:block">
                 {user.name}
                 <br />
-                View Profile
+                View Profilee
               </div>
               <div className="hidden sm:block">
                 <Icon.Detail size={15} />
