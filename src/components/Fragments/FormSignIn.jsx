@@ -76,7 +76,7 @@ function FormSignIn({ onSubmit }) {
               viewBox="-0.5 0 48 48"
               version="1.1"
             >
-              <title>Google-color</title> <desc>Created with Sketch.</desc>
+              <title>Google-colorr</title> <desc>Created with Sketch.</desc>
               <defs> </defs>
               <g
                 id="Icons"
